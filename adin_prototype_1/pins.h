@@ -15,10 +15,10 @@
 #define GPIO_10 22
 #define GPIO_11 23
 
-#define MP_DIG_IN_HALL1 GPIO_0
-#define MP_DIG_IN_HALL2 GPIO_1
-#define MP_DIG_IN_TGL_SW GPIO_2
-#define MP_DIG_IN_MOM_SW GPIO_3
-#define MP_DIG_IN_DM_SW GPIO_4
+#define M_PIN_DIG_IN_HALL1 GPIO_0
+#define M_PIN_DIG_IN_HALL2 GPIO_1
+#define M_PIN_DIG_IN_TGL_SW GPIO_2
+#define M_PIN_DIG_IN_MOM_SW GPIO_3
+#define M_PIN_DIG_IN_DM_SW GPIO_4
 
 #endif

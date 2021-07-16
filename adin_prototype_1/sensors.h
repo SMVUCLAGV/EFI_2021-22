@@ -7,7 +7,7 @@
 #define M_DIG_IN_MOM_SW 3
 #define M_DIG_IN_DM_SW 4
 
-#define DIG_IN_DEREF(U_32, M_DIG_IN_SENSOR) ((U_32 >> M_DIG_IN_SENSOR) | 1)
+#define DIG_IN_DEREF(U_32_BIT_VEC, M_DIG_IN_SENSOR) ((U_32_BIT_VEC >> M_DIG_IN_SENSOR) | 1)
 
 #define M_DIG_OUT_INJ 0
 #define M_DIG_OUT_LED 1
