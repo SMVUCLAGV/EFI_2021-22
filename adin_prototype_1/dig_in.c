@@ -1,4 +1,5 @@
 #include "dig_in.h"
+#include "sensors.h"
 #include "pins.h"
 //#include "timer.h" for timestamp?
 

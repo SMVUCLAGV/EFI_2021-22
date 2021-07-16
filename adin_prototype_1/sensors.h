@@ -1,3 +1,6 @@
+#ifndef SENSORS_H
+#define SENSORS_H
+
 #define M_DIG_IN_HALL1 0
 #define M_DIG_IN_HALL2 1
 #define M_DIG_IN_TGL_SW 2
@@ -16,3 +19,5 @@
 #define M_ANLG_IN_MAP 2
 #define M_ANLG_IN_O2 3
 #define M_ANLG_IN_TPS 4
+
+#endif

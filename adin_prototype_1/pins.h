@@ -1,3 +1,6 @@
+#ifndef PINS_H
+#define PINS_H
+
 //define GPIO pins
 #define GPIO_0  8
 #define GPIO_1  7
@@ -17,3 +20,5 @@
 #define MP_DIG_IN_TGL_SW GPIO_2
 #define MP_DIG_IN_MOM_SW GPIO_3
 #define MP_DIG_IN_DM_SW GPIO_4
+
+#endif
