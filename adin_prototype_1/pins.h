@@ -21,4 +21,11 @@
 #define M_PIN_DIG_IN_MOM_SW GPIO_3
 #define M_PIN_DIG_IN_DM_SW GPIO_4
 
-#endif
+#define M_PIN_ADC_nCNVST_PIN  9;
+#define M_PIN_ADC_nEOC_PIN    29;
+#define M_PIN_ADC_nCS_PIN     10;
+#define M_PIN_ADC_SCLK_PIN    27;
+#define M_PIN_ADC_MOSI_PIN    11;
+#define M_PIN_ADC_MISO_PIN    12;
+
+#endif // PINS_H

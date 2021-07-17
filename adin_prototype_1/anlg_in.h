@@ -12,4 +12,4 @@ void anlg_in_read(uint32_t m_anlg_in_sensor, double* value, uint32_t* timestamp)
 void anlg_in_readall(double* value_a, uint32_t* timestamp); 
   // returns an array of doubles, dereference using the macros
 
-#endif
+#endif // ANLG_IN_H
