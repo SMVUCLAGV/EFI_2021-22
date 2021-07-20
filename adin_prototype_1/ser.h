@@ -8,6 +8,8 @@
 //  Bytes will also be recieved in a non-blocking way. The bytes will be written to
 //  a buffer and accessed via a pointer.
 
+#define SER_BUFFER_BYTE_SIZE 500
+
 void ser_init();
 
 uint32_t ser_write(uint8_t* towrite, uint32_t numbytes);
