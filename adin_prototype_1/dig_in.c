@@ -45,8 +45,17 @@ void dig_in_readall(uint32_t* value, uint32_t* timestamp){
 // m_int_type has to be turned into an arduino RISING, FALLING, BOTH keyword
 // m_dig_in_sensor needs to be converted to m_pin_...
 void dig_in_attachint(uint32_t m_dig_in_sensor, void (*f)(), uint32_t m_int_type){
+    uint32_t m_ard_int_type;
+    switch(m_int_type) {
+        case M_INT_RISING:
+            m_ard_int_type = RISING;
+            break;
+        case M_INT_FALLING:
+            m_ard_int_type = FALLING;
+            break;
+        case M_INT_BOTH:
+            m_ard_int_type = CHANGE;
+            break;
+    }
     attachInterrupt(m_dig_in_sensor,f,m_int_type);
 }
-
-// private functions
-uint32_t p_dig_in

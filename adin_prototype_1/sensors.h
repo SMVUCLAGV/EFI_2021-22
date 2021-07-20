@@ -20,5 +20,6 @@
 #define M_ANLG_IN_MAP 2
 #define M_ANLG_IN_O2 3
 #define M_ANLG_IN_TPS 4
+#define M_ANLG_IN_NUM_SENSORS 5
 
 #endif // SENSORS_H

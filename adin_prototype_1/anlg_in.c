@@ -1,11 +1,9 @@
 #include "anlg_in.h"
 #include "flags.h"
 
-static double arr[2
+static double arr[M_ANLG_IN_NUM_SENSORS];
 void anlg_in_init(){
-  pinMode(ADC_nCNVST_PIN, OUTPUT);
-  digitalWrite(ADC_nCNVST_PIN, HIGH);
-
+  pinMode(ADC_nCNVST_PIN, OUTPUT); digitalWrite(ADC_nCNVST_PIN, HIGH); 
   // End-of-Conversion Pin, Attach Interrupt
   attachInterrupt(digitalPinToInterrupt(ADC_nEOC_PIN), dummy, FALLING);
   detachInterrupt(digitalPinToInterrupt(ADC_nEOC_PIN));

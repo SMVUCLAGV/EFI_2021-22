@@ -16,6 +16,9 @@ void dig_in_readall(uint32_t* value, uint32_t* timestamp);
     // returns a 32 bit wide vector of sensor values with corresponding timestamp (pass
     //      by reference). Dereference with the DIG_IN_DEREF(,) macro
 
+#define M_INT_RISING 0
+#define M_INT_FALLING 1
+#define M_INT_BOTH 2
 void dig_in_attachint(uint32_t m_dig_in_sensor, void (*f)(), uint32_t m_int_type);
 
 #endif // DIG_IN_H
