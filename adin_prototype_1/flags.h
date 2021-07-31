@@ -21,6 +21,6 @@ volatile uint32_t flag_v = 0; // flag vector
 
 #define FLAG_DRF(FLAG) ((flag_v >> FLAG) & 1)
 #define FLAG_SET(FLAG) (flag_v |= (1 << FLAG))
-#define FLAG_CLR(FLAG) (flag_v = ~(~flag_v | (1 << FLAG)))
+#define FLAG_CLR(FLAG) (flag_v &= ~(1 << FLAG))
 
 #endif // FLAG_H
