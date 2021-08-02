@@ -11,11 +11,11 @@ struct dp_s{
     double map;
     
     // Sensor Values (Asynchronous)
-    unsigned long revolutions;
-    unsigned long lastRPMCalcTime;
-    unsigned long totalRevolutions;
-    unsigned long startingRevolutions;
-    unsigned long previousRev;
+    uint64_t revolutions;
+    uint64_t lastRPMCalcTime;
+    uint64_t totalRevolutions;
+    uint64_t startingRevolutions;
+    uint64_t previousRev;
 
     // Derived Sensor Values
     double mapavg;
@@ -24,6 +24,7 @@ struct dp_s{
 
 
     // Flags
+    uint32_t flag_eng_on : 1;// .... and so on
 
     // Misc
 
@@ -32,6 +33,9 @@ struct dp_s{
         //unsigned long injectorPulseTime;
         //unsigned long totalPulseTime;
         //unsigned long lastPulse;
+};
+
+struct dp_calc_s{
 };
 
 void dp_init(){
