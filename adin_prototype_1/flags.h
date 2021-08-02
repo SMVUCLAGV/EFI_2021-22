@@ -17,6 +17,9 @@
 // ser.c
 #define FLAG_SER_SENDING 6
 
+// alg_pvnrt.c
+#define FLAG_ENG_ON 7
+
 volatile uint32_t flag_v = 0; // flag vector
 
 #define FLAG_DRF(FLAG) ((flag_v >> FLAG) & 1)

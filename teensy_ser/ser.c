@@ -42,10 +42,6 @@ void ser_read(uint8_t** toread, uint32_t* numbytes) {
     //  many bytes have been recieved since the last reset.
 }
 
-void ser_readreset() {
-    // completely flush rcvbuffer
-}
-
 void ser_readreset(uint32_t numbytes) {
     // flush rcvbuffer by numbytes
 }

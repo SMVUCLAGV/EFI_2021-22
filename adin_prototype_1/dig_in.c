@@ -36,12 +36,6 @@ void dig_in_read(uint32_t m_dig_in_sensor, uint32_t* value, uint32_t* timestamp)
     *value = DIG_IN_DEREF(dig_pin_st_v, m_dig_in_sensor);
 }
 
-void dig_in_readall(uint32_t* value, uint32_t* timestamp){
-    //need to do timestamp too
-    *value = dig_pin_st_v;
-}
-
-
 // m_int_type has to be turned into an arduino RISING, FALLING, BOTH keyword
 // m_dig_in_sensor needs to be converted to m_pin_...
 void dig_in_attachint(uint32_t m_dig_in_sensor, void (*f)(), uint32_t m_int_type){

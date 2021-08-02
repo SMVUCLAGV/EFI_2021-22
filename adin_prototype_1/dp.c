@@ -2,11 +2,37 @@
 #include "dig_in.h"
 
 struct dp_s{
-    uint32_t* m_data;
+    //// Pre Calculation ////
+
+    // Sensor Values (Synchronous)
+    double TPS;
+    double DTPS;
+    double ECT;
+    double IAT;
+    double MAP;
+    
+    // Sensor Values (Asynchronous)
+    unsigned long revolutions;
+    unsigned long lastRPMCalcTime;
+    unsigned long totalRevolutions;
+    unsigned long startingRevolutions;
+    unsigned long previousRev;
+    // Derived Sensor Values
+
+
+
+    // Flags
+
+    // Misc
+
+    //// Post-Calculation ////
+    unsigned long injectorPulseTime;
+  unsigned long totalPulseTime;
+  unsigned long lastPulse;
 };
 
 void dp_init(){
-    //mempool allocate for struct?
+    
 }
 
 void dp_reset();

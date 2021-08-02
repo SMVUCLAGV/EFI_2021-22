@@ -1,6 +1,8 @@
 #ifndef TEENSY_UART_H
 #define TEENSY_UART_H
 
+#include <stdint.h>
+
 #define _RBS(REG_PTR, BIT) (REG_PTR* |= (1 << BIT))   // register bit set
 #define _RBC(REG_PTR, BIT) (REG_PTR* &= ~(1 << BIT))  // register bit clear
 
@@ -12,7 +14,7 @@
 
 
 #define TEENSY_UART_2_BASE_ADDR 0x4006a000
-#define TEENSY_UART_BASE_ADDR   TEENSY_UART_2_BASE_ADDR
+uint32_t* const TEENSY_UART_BASE_ADDR = TEENSY_UART_2_BASE_ADDR;
 
 // Registers
 const uint32_t* TEENSY_UART_BDH         = (TEENSY_UART_BASE_ADDR + 0x00);
