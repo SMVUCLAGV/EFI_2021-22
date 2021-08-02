@@ -5,11 +5,10 @@ struct dp_s{
     //// Pre Calculation ////
 
     // Sensor Values (Synchronous)
-    double TPS;
-    double DTPS;
-    double ECT;
-    double IAT;
-    double MAP;
+    double tps;
+    double ect;
+    double iat;
+    double map;
     
     // Sensor Values (Asynchronous)
     unsigned long revolutions;
@@ -17,7 +16,10 @@ struct dp_s{
     unsigned long totalRevolutions;
     unsigned long startingRevolutions;
     unsigned long previousRev;
+
     // Derived Sensor Values
+    double mapavg;
+    double dtps;
 
 
 
@@ -26,9 +28,10 @@ struct dp_s{
     // Misc
 
     //// Post-Calculation ////
-    unsigned long injectorPulseTime;
-  unsigned long totalPulseTime;
-  unsigned long lastPulse;
+    struct dp_calc_s;
+        //unsigned long injectorPulseTime;
+        //unsigned long totalPulseTime;
+        //unsigned long lastPulse;
 };
 
 void dp_init(){
