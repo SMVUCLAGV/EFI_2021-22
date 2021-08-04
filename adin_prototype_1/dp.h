@@ -3,14 +3,49 @@
 
 #include <stdint.h>
 
-struct dp_s;
+struct dp_s{
+    //// Pre Calculation ////
 
-struct dp_calc_s;
+    // Sensor Values (Synchronous)
+    double tps;
+    double ect;
+    double iat;
+    double map;
+    
+    // Sensor Values (Asynchronous)
+    uint64_t revolutions;
+    uint64_t lastRPMCalcTime;
+    uint64_t totalRevolutions;
+    uint64_t startingRevolutions;
+    uint64_t previousRev;
+
+    // Derived Sensor Values
+    double mapavg;
+    double dtps;
+
+
+
+    // Flags
+    uint32_t flag_eng_on : 1;// .... and so on
+
+    // Misc
+
+    //// Post-Calculation ////
+    struct dp_calc_s;
+        //unsigned long injectorPulseTime;
+        //unsigned long totalPulseTime;
+        //unsigned long lastPulse;
+};
+
+struct dp_calc_s{
+};
+
 
 struct dp_s dp_array[10];
-
 struct dp_s * dp_itr;
+int dp_counter;
 
+// will set up interrupts for RPM and speedometer
 void dp_init();
 
 void dp_reset();

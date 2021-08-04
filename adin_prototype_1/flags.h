@@ -12,7 +12,7 @@
 #define FLAG_DIG_IN_VALID 3
 
 // angl_in.h
-#define FLAG_ANLG_IN_VALID 4
+#define FLAG_ANLG_IN_READY 4
 
 // ser.c
 #define FLAG_SER_SENDING 6
@@ -20,10 +20,12 @@
 // alg_pvnrt.c
 #define FLAG_ENG_ON 7
 
+#define FLAG_DP_COMPLETE
+
 volatile uint32_t flag_v = 0; // flag vector
 
-#define FLAG_DRF(FLAG) ((flag_v >> FLAG) & 1)
-#define FLAG_SET(FLAG) (flag_v |= (1 << FLAG))
-#define FLAG_CLR(FLAG) (flag_v &= ~(1 << FLAG))
+#define _FLAG_GET(FLAG) ((flag_v >> FLAG) & 1)
+#define _FLAG_SET(FLAG) (flag_v |= (1 << FLAG))
+#define _FLAG_CLR(FLAG) (flag_v &= ~(1 << FLAG))
 
 #endif // FLAG_H
