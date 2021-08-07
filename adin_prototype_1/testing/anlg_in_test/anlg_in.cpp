@@ -18,7 +18,9 @@ static uint32_t fetchVals;
   // initializes input pins
 void anlg_in_init(){
   Serial.println("anlg_in setup starting");
-  pinMode(M_PIN_ADC_nCNVST_PIN, OUTPUT); digitalWrite(M_PIN_ADC_nCNVST_PIN, HIGH); 
+  pinMode(M_PIN_ADC_nCNVST_PIN, OUTPUT); 
+  digitalWrite(M_PIN_ADC_nCNVST_PIN, HIGH); 
+
   // End-of-Conversion Pin, Attach Interrupt
   attachInterrupt(digitalPinToInterrupt(M_PIN_ADC_nEOC_PIN), anlg_in_dummy, FALLING);
   detachInterrupt(digitalPinToInterrupt(M_PIN_ADC_nEOC_PIN));
@@ -51,6 +53,7 @@ void anlg_in_init(){
 void anlg_in_meas() {
   Serial.println("anlg_in measure starting");
   f.ANLG_IN_READY = 0;
+
   // Get Conversion Time
   convTime = timer_systime();
 
@@ -61,45 +64,63 @@ void anlg_in_meas() {
   while(timer_systime() < temp + 1); // waiting 100 ns (CHANGE TO TIMER?)
   digitalWrite(M_PIN_ADC_nCNVST_PIN, HIGH);
   validVals = 0;
+
   Serial.println("anlg_in measure complete");
 } 
 
 // output value after conversion, switch to read from each sensor like dig_in. The values received here will be converted to usable units (e.g. kPa)
 void anlg_in_read(uint32_t m_anlg_in_sensor, double* value, uint32_t* timestamp){
   Serial.println("anlg_in read starting");
+
   if (validVals) {
-    int data;
-    unsigned long temp;
     if (fetchVals) {
         // Read from ADC's FIFO
-      data = 0;
-      temp = 0;
+      int data;
       for (int i = 0; i < M_ANLG_IN_NUM_SENSORS; i++){
+        data = 0;
+
         comm_spi_begin();     // Get and store values from ADC FIFO
         digitalWrite(M_PIN_ADC_nCS_PIN, LOW);       // Select ADC
-        data |= ((int)comm_spi_read() << 6);  // MSBs first
+        data |= (int(SPI.transfer(0)) << 6);  // MSBs first
         digitalWrite(M_PIN_ADC_nCS_PIN, HIGH);      // De-Select ADC
         comm_spi_end();
 
-        temp = timer_systime();
+        unsigned long temp = timer_systime();
         while(timer_systime() < temp + 5);
 
         comm_spi_begin();     // Get and store values from ADC FIFO
         digitalWrite(M_PIN_ADC_nCS_PIN, LOW);       // Select ADC
-        data |= ((int)comm_spi_read() >> 2);         // LSBs next
+        data |= int(SPI.transfer(0) >> 2);         // LSBs next
         digitalWrite(M_PIN_ADC_nCS_PIN, HIGH);      // De-Select ADC
         comm_spi_end();
 
+        Serial.print("Value received: ");
+        Serial.print(data);
+        Serial.print(" at index: ")
+        Serial.println(i);
         arr[i] = data;
       }
 
       fetchVals = 0;
     }
+    else {
+      Serial.println("No action, validVals is true but fetchVals is false");
+    }
 
-    *timestamp = temp;
+    *timestamp = timer_systime();
     *value = arr[m_anlg_in_sensor];
+    Serial.println("anlg_in read complete - successful");
+    return;
+  } 
+
+  //ERROR CHANNELS
+  for (int i = 0; i < M_ANLG_IN_NUM_SENSORS; i++){
+    arr[i] = -1;
   }
-  Serial.println("anlg_in read complete");
+  *timestamp = timer_systime();
+  *value = arr[m_anlg_in_sensor];
+  Serial.println("anlg_in read complete - validVals is FALSE");
+  
 }
 
 void anlg_in_eoc(){
@@ -107,6 +128,4 @@ void anlg_in_eoc(){
   fetchVals = 1;
 }
 
-void anlg_in_dummy(){
-  return;
-}
+void anlg_in_dummy(){;}
