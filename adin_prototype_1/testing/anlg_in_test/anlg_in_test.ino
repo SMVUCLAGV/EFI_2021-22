@@ -10,7 +10,7 @@ void setup () {
 
 void loop () {
     anlg_in_meas();
-    delay(1000)
+    delay(1000);
     anlg_in_read(0, &value, &timestamp);
     Serial.println(value);
     Serial.println(timestamp);
