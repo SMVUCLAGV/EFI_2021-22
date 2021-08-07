@@ -1,5 +1,5 @@
 #ifndef FLAGS_H
-#define FLAG_H
+#define FLAGS_H
 
 #include <stdint.h>
 
@@ -11,29 +11,12 @@ struct flags {
     // dig_in.h
     uint64_t DIG_IN_VALID   : 1;
     // anlg_in.h
-    uint64_t CALC   : 1;
-    uint64_t CALC   : 1;
-    uint64_t CALC   : 1;
-    uint64_t CALC   : 1;
-    uint64_t CALC   : 1;
-    uint64_t CALC   : 1;
-    uint64_t CALC   : 1;
-    uint64_t CALC   : 1;
+    uint64_t ANLG_IN_READY   : 1;
+    // ser.c
+    uint64_t SER_SENDING   : 1;
+    // alg_pvnrt.c
+    uint64_t ENG_ON   : 1;
+    uint64_t DP_COMPLETE   : 1;
 } f;
-
-
-// dig_in.h
-#define FLAG_DIG_IN_VALID 3
-
-// angl_in.h
-#define FLAG_ANLG_IN_READY 4
-
-// ser.c
-#define FLAG_SER_SENDING 6
-
-// alg_pvnrt.c
-#define FLAG_ENG_ON 7
-
-#define FLAG_DP_COMPLETE
 
 #endif // FLAG_H

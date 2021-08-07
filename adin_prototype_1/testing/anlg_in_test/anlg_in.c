@@ -86,10 +86,7 @@ void anlg_in_read(uint32_t m_anlg_in_sensor, double* value, uint32_t* timestamp)
       case M_ANLG_IN_TPS:
         value = data;
     }
-  }
-}
-        value = data;
-    }
+    value = data;
   }
 }
 

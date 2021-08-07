@@ -2,6 +2,7 @@
 #define SPI_H
 
 #include <stdint.h>
+#include <SPI.h>
 
 struct comm_spi_s;
 

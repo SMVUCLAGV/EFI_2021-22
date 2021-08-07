@@ -1,5 +1,5 @@
 #include <stdint.h>
-
+#include <Arduino.h>
 #include "dig_in.h"
 #include "flags.h"
 #include "sensors.h"
@@ -17,7 +17,7 @@ void dig_in_init(){
     pinMode(M_PIN_DIG_IN_TGL_SW, INPUT);
 
     dig_in_meas();
-    FLAG_SET(FLAG_DIG_IN_VALID);
+     f.DIG_IN_VALID = 1;
 }
 
 void dig_in_meas(){
