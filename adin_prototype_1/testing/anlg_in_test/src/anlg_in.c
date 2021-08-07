@@ -4,7 +4,7 @@
 #include "spi.h"
 #include "pins.h"
 
-#include "arduino.h"
+#include <Arduino.h>
 
 #define ANLG_IN_FLAG_VALID_DATA 0
 #define ANLG_IN_FLAG_
@@ -88,7 +88,13 @@ void anlg_in_read(uint32_t m_anlg_in_sensor, double* value, uint32_t* timestamp)
     }
   }
 }
-        value = data;
+
+void anlg_in_dummy(){
+  
+}
+
+
+void anlg_in_handle_eoc();        value = data;
     }
   }
 }

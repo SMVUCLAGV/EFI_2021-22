@@ -4,7 +4,7 @@
 #include "spi.h"
 #include "pins.h"
 
-#include "arduino.h"
+#include <Arduino.h>
 
 #define ANLG_IN_FLAG_VALID_DATA 0
 #define ANLG_IN_FLAG_
@@ -20,9 +20,9 @@ void anlg_in_init(){
   
   pinMode(M_PIN_ADC_nCNVST_PIN, OUTPUT); digitalWrite(M_PIN_ADC_nCNVST_PIN, HIGH); 
   // End-of-Conversion Pin, Attach Interrupt
-  attachInterrupt(digitalPinToInterrupt(M_PIN_ADC_nEOC_PIN), dummy, FALLING);
+  attachInterrupt(digitalPinToInterrupt(M_PIN_ADC_nEOC_PIN), anlg_in_dummy, FALLING);
   detachInterrupt(digitalPinToInterrupt(M_PIN_ADC_nEOC_PIN));
-  attachInterrupt(digitalPinToInterrupt(M_PIN_ADC_nEOC_PIN), handle_EOC, FALLING);
+  attachInterrupt(digitalPinToInterrupt(M_PIN_ADC_nEOC_PIN), anlg_in_eoc, FALLING);
 
   // Setup SPI
   pinMode(M_PIN_ADC_nCS_PIN, OUTPUT);
@@ -91,4 +91,13 @@ void anlg_in_read(uint32_t m_anlg_in_sensor, double* value, uint32_t* timestamp)
         value = data;
     }
   }
+}
+
+void anlg_in_eoc(){
+  validVals = 1;
+  fetchVals = 1;
+}
+
+void anlg_in_dummy(){
+  return;
 }
