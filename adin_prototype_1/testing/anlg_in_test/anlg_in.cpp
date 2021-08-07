@@ -81,7 +81,7 @@ void anlg_in_read(uint32_t m_anlg_in_sensor, double* value, uint32_t* timestamp)
 
         comm_spi_begin();     // Get and store values from ADC FIFO
         digitalWrite(M_PIN_ADC_nCS_PIN, LOW);       // Select ADC
-        data |= (int(SPI.transfer(0)) << 6);  // MSBs first
+        data |= ((int)comm_spi_read() << 6);   // MSBs first
         digitalWrite(M_PIN_ADC_nCS_PIN, HIGH);      // De-Select ADC
         comm_spi_end();
 
@@ -90,14 +90,15 @@ void anlg_in_read(uint32_t m_anlg_in_sensor, double* value, uint32_t* timestamp)
 
         comm_spi_begin();     // Get and store values from ADC FIFO
         digitalWrite(M_PIN_ADC_nCS_PIN, LOW);       // Select ADC
-        data |= int(SPI.transfer(0) >> 2);         // LSBs next
+        data |= ((int)comm_spi_read() >> 2);        // LSBs next
         digitalWrite(M_PIN_ADC_nCS_PIN, HIGH);      // De-Select ADC
         comm_spi_end();
 
-        Serial.print("Value received: ");
+        Serial.print("ANLG_IN: Value received: ");
         Serial.print(data);
-        Serial.print(" at index: ")
-        Serial.println(i);
+        Serial.print(" at channel: ");
+        Serial.print(i);
+        Serial.println(" in for loop");
         arr[i] = data;
       }
 
