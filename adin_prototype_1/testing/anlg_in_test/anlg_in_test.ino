@@ -6,7 +6,9 @@ uint32_t timestamp;
 void setup () {
     anlg_in_init();
     Serial.begin(115200);
+    while (!Serial);
     Serial.println("begin tests");
+    
 }
 
 void loop () {

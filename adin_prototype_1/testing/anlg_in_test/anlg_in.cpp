@@ -77,7 +77,7 @@ void anlg_in_read(uint32_t m_anlg_in_sensor, double* value, uint32_t* timestamp)
       for (int i = 0; i < M_ANLG_IN_NUM_SENSORS; i++){
         comm_spi_begin();     // Get and store values from ADC FIFO
         digitalWrite(M_PIN_ADC_nCS_PIN, LOW);       // Select ADC
-        data |= ((int)comm_spi_read() << 8);  // MSBs first
+        data |= ((int)comm_spi_read() << 6);  // MSBs first
         digitalWrite(M_PIN_ADC_nCS_PIN, HIGH);      // De-Select ADC
         comm_spi_end();
 
@@ -86,7 +86,7 @@ void anlg_in_read(uint32_t m_anlg_in_sensor, double* value, uint32_t* timestamp)
 
         comm_spi_begin();     // Get and store values from ADC FIFO
         digitalWrite(M_PIN_ADC_nCS_PIN, LOW);       // Select ADC
-        data |= (int)comm_spi_read();         // LSBs next
+        data |= ((int)comm_spi_read() >> 2);         // LSBs next
         digitalWrite(M_PIN_ADC_nCS_PIN, HIGH);      // De-Select ADC
         comm_spi_end();
 
