@@ -1,5 +1,6 @@
 #include "timer.h"
 #include <stdint.h>
+#include <Arduino.h>
 
 void timers_init();
 	// initialize all timers: injection timer, calculation flag timer, hid flag timer
