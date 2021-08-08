@@ -8,8 +8,6 @@
 
 #include <Arduino.h>
 
-#define ANLG_IN_FLAG_VALID_DATA 0
-
 static double arr[M_ANLG_IN_NUM_SENSORS];
 static uint64_t convTime;
 static uint32_t validVals;
@@ -76,12 +74,13 @@ void anlg_in_read(uint32_t m_anlg_in_sensor, double* value, uint32_t* timestamp)
     if (fetchVals) {
         // Read from ADC's FIFO
       int data;
-      for (int i = 0; i < M_ANLG_IN_NUM_SENSORS; i++){
+      int i = 0;
+      for (; i < M_ANLG_IN_NUM_SENSORS; i++){
         data = 0;
 
         comm_spi_begin();     // Get and store values from ADC FIFO
         digitalWrite(M_PIN_ADC_nCS_PIN, LOW);       // Select ADC
-        data |= ((int)comm_spi_read() << 6);   // MSBs first
+        data |= ((uint32_t)comm_spi_read()) << 6;   // MSBs first
         digitalWrite(M_PIN_ADC_nCS_PIN, HIGH);      // De-Select ADC
         comm_spi_end();
 
@@ -90,7 +89,7 @@ void anlg_in_read(uint32_t m_anlg_in_sensor, double* value, uint32_t* timestamp)
 
         comm_spi_begin();     // Get and store values from ADC FIFO
         digitalWrite(M_PIN_ADC_nCS_PIN, LOW);       // Select ADC
-        data |= ((int)comm_spi_read() >> 2);        // LSBs next
+        data |= ((uint32_t)comm_spi_read()) >> 2;        // LSBs next
         digitalWrite(M_PIN_ADC_nCS_PIN, HIGH);      // De-Select ADC
         comm_spi_end();
 
@@ -99,7 +98,32 @@ void anlg_in_read(uint32_t m_anlg_in_sensor, double* value, uint32_t* timestamp)
         Serial.print(" at channel: ");
         Serial.print(i);
         Serial.println(" in for loop");
-        arr[i] = data;
+        arr[i] = (double) data;
+      }
+
+      for (; i < 16; i++){
+        data = 0;
+
+        comm_spi_begin();     // Get and store values from ADC FIFO
+        digitalWrite(M_PIN_ADC_nCS_PIN, LOW);       // Select ADC
+        data |= ((uint32_t)comm_spi_read()) << 6;   // MSBs first
+        digitalWrite(M_PIN_ADC_nCS_PIN, HIGH);      // De-Select ADC
+        comm_spi_end();
+
+        unsigned long temp = timer_systime();
+        while(timer_systime() < temp + 5);
+
+        comm_spi_begin();     // Get and store values from ADC FIFO
+        digitalWrite(M_PIN_ADC_nCS_PIN, LOW);       // Select ADC
+        data |= ((uint32_t)comm_spi_read()) >> 2;        // LSBs next
+        digitalWrite(M_PIN_ADC_nCS_PIN, HIGH);      // De-Select ADC
+        comm_spi_end();
+
+        Serial.print("ANLG_IN: Value received: ");
+        Serial.print(data);
+        Serial.print(" at channel: ");
+        Serial.print(i);
+        Serial.println(" in for loop");
       }
 
       fetchVals = 0;
@@ -108,7 +132,7 @@ void anlg_in_read(uint32_t m_anlg_in_sensor, double* value, uint32_t* timestamp)
       Serial.println("No action, validVals is true but fetchVals is false");
     }
 
-    *timestamp = timer_systime();
+    *timestamp = convTime;
     *value = arr[m_anlg_in_sensor];
     Serial.println("anlg_in read complete - successful");
     return;

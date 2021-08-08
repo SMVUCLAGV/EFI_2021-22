@@ -13,7 +13,7 @@ void setup () {
 
 void loop () {
     anlg_in_meas();
-    delay(1000);
+    delay(50);
     anlg_in_read(0, &value, &timestamp);
     Serial.print("INO: Value is: ");
     Serial.print(value);
