@@ -19,4 +19,4 @@ struct flags {
     uint64_t DP_COMPLETE   : 1;
 } f;
 
-#endif // FLAG_H
+#endif // FLAGS_H
