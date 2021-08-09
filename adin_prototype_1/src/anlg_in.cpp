@@ -8,10 +8,10 @@
 
 #include <Arduino.h>
 
-static double arr[M_ANLG_IN_NUM_SENSORS];
-static uint64_t convTime;
-static uint32_t validVals;
-static uint32_t fetchVals;
+static double arr[M_ANLG_IN_NUM_SENSORS]; //array storing analog in sensor values
+static uint64_t convTime; //stores the timestamp of the most recent SPI reading
+static uint32_t validVals; //boolean, whether the values read are valid
+static uint32_t fetchVals; //boolean, whether values are available to be fetched
 
   // initializes input pins
 void anlg_in_init(){
@@ -72,9 +72,11 @@ void anlg_in_read(uint32_t m_anlg_in_sensor, double* value, uint32_t* timestamp)
 
   if (validVals) {
     if (fetchVals) {
-        // Read from ADC's FIFO
+      //fetchVals = true, validVals = true
+      // Read from ADC's FIFO
       int data;
       int i = 0;
+      //Read from all available sensors
       for (; i < M_ANLG_IN_NUM_SENSORS; i++){
         data = 0;
 
@@ -100,7 +102,7 @@ void anlg_in_read(uint32_t m_anlg_in_sensor, double* value, uint32_t* timestamp)
         Serial.println(" in for loop");
         arr[i] = (double) data;
       }
-
+      //Read from other channels that are not connected to a set sensor, since the ADC has 16 channels
       for (; i < 16; i++){
         data = 0;
 
@@ -129,6 +131,7 @@ void anlg_in_read(uint32_t m_anlg_in_sensor, double* value, uint32_t* timestamp)
       fetchVals = 0;
     }
     else {
+      //fetchVals = false, validVals = true
       Serial.println("No action, validVals is true but fetchVals is false");
     }
 
