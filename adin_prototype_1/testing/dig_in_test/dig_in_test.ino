@@ -8,15 +8,16 @@ void setup () {
     Serial.begin(115200);
     while (!Serial);
     Serial.println("begin tests");
-    
 }
 
 void loop () {
-    anlg_in_meas();
+    dig_in_meas();
     delay(50);
-    anlg_in_read(0, &value, &timestamp);
+    dig_in_read(0, &value, &timestamp);
     Serial.print("INO: Value is: ");
     Serial.print(value);
     Serial.print(" at timestamp: ");
     Serial.println(timestamp);
+
+    //can we test dig_in_attachint?
 }
