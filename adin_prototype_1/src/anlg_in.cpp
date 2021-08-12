@@ -8,6 +8,7 @@
 
 #include <Arduino.h>
 
+
 static double arr[M_ANLG_IN_NUM_SENSORS]; //array storing analog in sensor values
 static uint64_t convTime; //stores the timestamp of the most recent SPI reading
 static uint32_t validVals; //boolean, whether the values read are valid
@@ -86,7 +87,7 @@ void anlg_in_read(uint32_t m_anlg_in_sensor, double* value, uint32_t* timestamp)
         digitalWrite(M_PIN_ADC_nCS_PIN, HIGH);      // De-Select ADC
         comm_spi_end();
 
-        unsigned long temp = timer_systime();
+        uint32_t temp = timer_systime();
         while(timer_systime() < temp + 5);
 
         comm_spi_begin();     // Get and store values from ADC FIFO

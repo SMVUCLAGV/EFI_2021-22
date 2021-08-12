@@ -1,6 +1,6 @@
 #include "src/dig_in.h"
 
-double value;
+uint32_t value;
 uint32_t timestamp;
 
 void setup () {

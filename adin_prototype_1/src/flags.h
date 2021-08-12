@@ -2,6 +2,7 @@
 #define FLAGS_H
 
 #include <stdint.h>
+extern struct flags f;
 
 struct flags {
     uint64_t HID    : 1;
@@ -17,6 +18,8 @@ struct flags {
     // alg_pvnrt.c
     uint64_t ENG_ON   : 1;
     uint64_t DP_COMPLETE   : 1;
-} f;
+};
+
+void flags_init();
 
 #endif // FLAGS_H

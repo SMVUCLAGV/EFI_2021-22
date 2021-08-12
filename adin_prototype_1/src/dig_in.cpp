@@ -6,6 +6,8 @@
 #include "pins.h"
 #include "timer.h" 
 
+#include <Arduino.h>
+
 
 static uint32_t dig_pin_st_v; // bit vector of pin states. Access using sensors.h macros
 static uint64_t convTime;
@@ -43,8 +45,8 @@ void dig_in_read(uint32_t m_dig_in_sensor, uint32_t* value, uint32_t* timestamp)
 
 // m_int_type has to be turned into an arduino RISING, FALLING, BOTH keyword
 // m_dig_in_sensor needs to be converted to m_pin_...
-void dig_in_attachint(uint32_t m_dig_in_sensor, void (*f)(), uint32_t m_int_type){
-    uint32_t m_ard_int_type;
+void dig_in_attachint(uint32_t m_dig_in_sensor, void (*func)(), uint32_t m_int_type){
+    uint32_t m_ard_int_type = 0;
     switch(m_int_type) {
         case M_INT_RISING:
             m_ard_int_type = RISING;
@@ -56,5 +58,5 @@ void dig_in_attachint(uint32_t m_dig_in_sensor, void (*f)(), uint32_t m_int_type
             m_ard_int_type = CHANGE;
             break;
     }
-    attachInterrupt(m_dig_in_sensor,f,m_int_type);
+    attachInterrupt(m_dig_in_sensor,func,m_ard_int_type);
 }

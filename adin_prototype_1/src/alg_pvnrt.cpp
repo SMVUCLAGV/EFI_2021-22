@@ -7,9 +7,7 @@ double alg_pvnrt_doubleMap(double val, double minIn, double maxIn, double minOut
     return ((val - minIn) / (maxIn - minIn)) * (maxOut - minOut) + minOut;
 }
 
-double alg_pvnrt_pulseTime(){
-    
-}
+double alg_pvnrt_pulseTime();
 
 uint32_t alg_pvnrt_tbl();
 uint32_t alg_pvnrt_savetbl();

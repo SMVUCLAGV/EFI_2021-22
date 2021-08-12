@@ -1,6 +1,8 @@
 #include "dig_out.h"
 #include "timer.h"
 
+#include <Arduino.h>
+
 // setup each output pin to be an output. Setup PWM timer here!
 void dig_out_init(){
     return;
@@ -13,7 +15,7 @@ void dig_out_write(uint32_t m_dig_out_sensor, uint32_t m_dig_out_state){
 
 
 // return the most recent state written to pin and record the timestamp
-void dig_out_read(uint32_t m_dig_out_sensor, uint32_t* value, uint32_t* timestamp){
+void dig_out_read(uint32_t m_dig_out_sensor, uint32_t* value, uint64_t* timestamp){
     value = digitalRead(m_dig_out_sensor);
     timestamp = timer_systime();
 }

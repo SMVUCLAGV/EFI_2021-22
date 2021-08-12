@@ -18,6 +18,6 @@ void dig_in_read(uint32_t m_dig_in_sensor, uint32_t* value, uint32_t* timestamp)
 #define M_INT_RISING 0
 #define M_INT_FALLING 1
 #define M_INT_BOTH 2
-void dig_in_attachint(uint32_t m_dig_in_sensor, void (*f)(), uint32_t m_int_type);
+void dig_in_attachint(uint32_t m_dig_in_sensor, void (*func)(), uint32_t m_int_type);
 
 #endif // DIG_IN_H

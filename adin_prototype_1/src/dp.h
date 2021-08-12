@@ -41,9 +41,17 @@ struct dp_calc_s{
 };
 
 
-struct dp_s dp_array[10];
+//maintaining two arrays that store dp structs. When one is requested by the serial monitor, it is sent and we initiate the
+//other dp array at that instant to minimize the delay for the first dp to be copied and sent back before being able to
+//collect data again. 
+struct dp_s dp_arr1[10];
+struct dp_s dp_arr2[10];
+
+//keeping track of the current dp, value can be 1 for dp_arr1 or 2 for dp_arr2
+uint32_t cur_dp;
+
 struct dp_s * dp_itr;
-int dp_counter;
+uint32_t dp_counter;
 
 // will set up interrupts for RPM and speedometer
 void dp_init();

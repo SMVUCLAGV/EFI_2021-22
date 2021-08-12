@@ -3,16 +3,27 @@
 
 void dp_init(){
     dp_counter = 0;
+    cur_dp = 1;
 }
 
 void dp_reset(){
-    dp_itr = dp_array;
+    if (cur_dp == 1){
+        dp_itr = dp_arr2;
+        cur_dp = 2;
+    }
+    else if (cur_dp == 2){
+        dp_itr = dp_arr1;
+        cur_dp = 1;
+    }
     dp_counter = 0;
 }
 
 void dp_tosend(const struct dp_s** ptrdp, uint32_t* numdp){
-    ptrdp = dp_array;
-    numdp = dp_counter;
+    if (cur_dp == 1)
+        *ptrdp = dp_arr1;
+    else if (cur_dp == 2)
+        *ptrdp = dp_arr2;
+    numdp = &dp_counter;
 }
 
 void dp_adv(){
