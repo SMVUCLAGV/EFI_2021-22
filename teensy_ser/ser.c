@@ -1,4 +1,5 @@
 #include "ser.h"
+#include "teensy_uart.h"
 #include <stdint.h>
 
 // Module will send/rec over serial port in a non blocking way. Usage will write
@@ -6,15 +7,20 @@
 //  Bytes will also be recieved in a non-blocking way. The bytes will be written to
 //  a buffer and accessed via a pointer.
 
+#define BAUDRATE 115200
+
 static uint8_t sendbuffer[SER_BUFFER_BYTE_SIZE];
 static uint8_t rcvbuffer[SER_BUFFER_BYTE_SIZE];
 
 static uint32_t sendbuffer_numbytes, rcvbuffer_numbytes;
 
 void ser_init() {
-  // Setup interupts for getting data
+  // Set baudrate
+  _RW_SET(REG_BDH, SBR_MSB, BAUDRATE >> 8);
+  _RW_SET(REG_BDL, SBR_LSB, BAUDRATE | 0x00FF);
+  // Setup interrupts 
+  _RB_SET
   
-  // Setup interrupt for done sending data
 
   // Start uart
 }
