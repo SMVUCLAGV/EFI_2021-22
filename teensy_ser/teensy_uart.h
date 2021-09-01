@@ -2,18 +2,11 @@
 #define TEENSY_UART_H
 
 #include <stdint.h>
-
-#define _RB_GET(REG_PTR, BIT) (((REG_PTR*) >> BIT) & 0x01)  // register bit clear
-#define _RB_SET(REG_PTR, BIT) (REG_PTR* |= (1 << BIT))   // register bit set
-#define _RB_CLR(REG_PTR, BIT) (REG_PTR* &= ~(1 << BIT))  // register bit clear
-
-#define _RW_SET(REG_PTR, MSB, LSB, WORD) (REG_PTR* &=                     \
-                                             ~((0xfffffffe << MSB) ^      \
-                                                (0xffffffff << LSB)) |    \
-                                                ((WORD) << LSB)) //register word set
-#define _RW_GET(REG_PTR, MSB, LSB) (((REG_PTR*) & ~(0xfffffffe << MSB)) >> LSB)
+#include "kinetis.h" // for getting interrupt defines
+#include "reg.h"
 
 
+// TEENSY UART MODULE DEFINES
 #define TEENSY_UART_2_BASE_ADDR 0x4006a000
 #define TEENSY_UART_BASE_ADDR  TEENSY_UART_2_BASE_ADDR
 
@@ -39,6 +32,22 @@
 #define SBK   0 // Send Break
 
 #define REG_S1          ((volatile uint32_t *) (TEENSY_UART_BASE_ADDR + 0x04))
+// NOTE: to clear flags in status registers, read from S reg then
+// read or write to D reg. IF YOU READ AN EMPTY D REGISTER TO CLEAR
+// A FLAG, THE FIFO WILL GET MESSED UP!!!
+#define TDRE 7  // 0: data in tx buffer > waterlevel
+                // 1: data in tx buffer <= waterlevel
+#define TC   6  // 0: transmitter Sending
+                // 1: transmiter idle
+#define RDRF 5  // 0: data in rx buffer < waterlevel
+                // 1: data in rx buffer >= waterlevel
+#define OR   3  // 0: no overrun has occurred in rx buffer from last clear
+                // 1: overrun has occurred or flag not cleared from last overrun
+#define NF   2  // 0: no noise detected since last clear
+                // 1: atleast one word in reciever has noise
+#define PE   0  // 0: no parity error detected since last clear
+                // 1: at leat one word had parity error since last clear
+
 #define REG_S2          ((volatile uint32_t *) (TEENSY_UART_BASE_ADDR + 0x05))
 #define REG_C3          ((volatile uint32_t *) (TEENSY_UART_BASE_ADDR + 0x06))
 #define REG_D           ((volatile uint32_t *) (TEENSY_UART_BASE_ADDR + 0x07))
@@ -51,12 +60,20 @@
 #define REG_IR          ((volatile uint32_t *) (TEENSY_UART_BASE_ADDR + 0x0e))
 
 #define REG_PFIFO       ((volatile uint32_t *) (TEENSY_UART_BASE_ADDR + 0x10))
-RXFE
-TXFE
+#define TXFE 7 // enable tx fifo
+#define RXFE 3 // enable rx fifo
+#define TXFIFOSIZE_LSB 4
+#define TXFIFOSIZE_MSB 6
+#define RXFIFOSIZE_LSB 0
+#define RXFIFOSIZE_MSB 2
 
 #define REG_CFIFO       ((volatile uint32_t *) (TEENSY_UART_BASE_ADDR + 0x11))
+#define TXFLUSH 7 // flush tx buffer
+#define RXFLUSH 6 // flush rx buffer
+
 #define REG_SFIFO       ((volatile uint32_t *) (TEENSY_UART_BASE_ADDR + 0x12))
 #define REG_TWFIFO      ((volatile uint32_t *) (TEENSY_UART_BASE_ADDR + 0x13))
+  // ^ TX water level
 #define REG_TCFIFO      ((volatile uint32_t *) (TEENSY_UART_BASE_ADDR + 0x14))
 #define REG_RWFIFO      ((volatile uint32_t *) (TEENSY_UART_BASE_ADDR + 0x15))
 #define REG_RCFIFO      ((volatile uint32_t *) (TEENSY_UART_BASE_ADDR + 0x16))
