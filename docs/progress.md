@@ -54,12 +54,21 @@ ___
 `void ser_readreset();`  
 `void ser_readreset(uint32_t numbytes);`  
 
-## ✓ spi
-✓ `void comm_spi_init();`  
-✓ `void comm_spi_begin();`  
-✓ `void comm_spi_write(uint8_t sendbyte);`  
-✓ `uint8_t comm_spi_read();`  
-✓ `void comm_spi_end();`  
+## ✓✓ spi
+**!- implemented currently using Arduino functions**
+
+✓✓ `void comm_spi_init();`  
+✓✓ `void comm_spi_begin();`  
+✓✓ `void comm_spi_write(uint8_t sendbyte);`  
+✓✓ `uint8_t comm_spi_read();`  
+✓✓ `void comm_spi_end();`  
+
+## ✓ filter
+✓ `void filter_init();`  
+✓ `int filter_addData(double input);`   
+✓ `int filter_noWeight();`   
+✓ `double filter_getData();`   
+✓ `double filter_getGauss();`  
 
 ## timer
 `void timers_init();`  
