@@ -32,6 +32,7 @@ ___
 ✓ `void dig_out_writepwm(uint32_t m_dig_out_sensor, double dutyCycle);`  
 
 ## dp
+Alternating Array of DPs  
 ✓ `void dp_init();`  
 ✓ `void dp_reset();`  
 ✓ `void dp_tosend(const struct dp_s** ptrdp, uint32_t* numdp);`  
@@ -55,8 +56,7 @@ ___
 `void ser_readreset(uint32_t numbytes);`  
 
 ## ✓✓ spi
-**!- implemented currently using Arduino functions**
-
+**!- implemented currently using Arduino functions**  
 ✓✓ `void comm_spi_init();`  
 ✓✓ `void comm_spi_begin();`  
 ✓✓ `void comm_spi_write(uint8_t sendbyte);`  

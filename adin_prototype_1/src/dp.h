@@ -49,8 +49,9 @@ struct dp_s dp_arr2[10];
 
 //keeping track of the current dp, value can be 1 for dp_arr1 or 2 for dp_arr2
 uint32_t cur_dp;
-
+//iterator that points to the current dp element in either of the dp arrays
 struct dp_s * dp_itr;
+// the amount of unsent dp to send
 uint32_t dp_counter;
 
 // will set up interrupts for RPM and speedometer
