@@ -7,14 +7,31 @@
 
 
 // TEENSY UART MODULE DEFINES
-#define TEENSY_UART_BASE_ADDR (0x4006B000u) // UART1
+#define TEENSY_UART_BASE_ADDR (0x400EA000) // UART4
 
-#define TXFIFO_SIZE 8
-#define RXFIFO_SIZE 8
+#define TXFIFO_SIZE 1u // SPECIFIC TO UART4!
+#define RXFIFO_SIZE 1u
+
+#define UART4_CLOCKRATE F_BUS
 
 // Registers
-#define REG_SIM_SCGC4   ((volatile uint32_t *) (0x40048034))
-#define SIM_SCGC_UART1 11
+//#define REG_SIM_SCGC4   ((volatile uint32_t *) (0x40048034))
+//#define SIM_SCGC_UART1 11
+
+#define REG_SIM_SCGC1   ((volatile uint32_t *) (0x40048028))
+#define SIM_SCGC_UART4 10 // NOTE: UART4 -> TX5 and RX5 in teensy schematic
+
+#define REG_PORTE_PCR24   ((volatile uint32_t *) (0x4004D060))
+#define REG_PORTE_PCR25   ((volatile uint32_t *) (0x4004D064))
+#define MUX_UART4 0b011
+#define MUX_MSB 10
+#define MUX_LSB 8
+#define DSE 6
+#define ODE 5
+#define PFE 4
+#define SRE 2
+#define PE 1
+#define PS 0
 
 #define REG_BDH         ((volatile uint8_t *) (TEENSY_UART_BASE_ADDR + 0x00))
 #define SBR_MSB_MSB 4
@@ -49,7 +66,7 @@
                 // 1: overrun has occurred or flag not cleared from last overrun
 #define NF   2  // 0: no noise detected since last clear
                 // 1: atleast one word in reciever has noise
-#define PE   0  // 0: no parity error detected since last clear
+//#define PE   0  // 0: no parity error detected since last clear
                 // 1: at leat one word had parity error since last clear
 
 #define REG_S2          ((volatile uint8_t *) (TEENSY_UART_BASE_ADDR + 0x05))

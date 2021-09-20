@@ -8,14 +8,14 @@
 //  Bytes will also be recieved in a non-blocking way. The bytes will be written to
 //  a buffer and accessed via a pointer.
 
-#define BAUDRATE 115200
+#define BAUDRATE 115200u
 #define SER_BUFFER_BYTE_SIZE 64
 
 void ser_init();
 
     // Writes to buffer that is to be sent
     //  returns 0 on buffer overflow. returns 1 else
-uint32_t ser_write(uint8_t* towrite, uint32_t numbytes);
+uint32_t ser_write(const uint8_t* towrite, uint32_t numbytes);
 
     // toread will be a pointer to buffer and numbytes will return how
     //  many bytes have been recieved since the last reset.
@@ -29,7 +29,6 @@ struct ser_flags {
   uint32_t overflowedreadbuffer : 1; // overflowed read buffer set: uart int    clr: never
 
   // UART module status (i.e. low level, relevant for debugging)
-  uint32_t txidle : 1; // transmitter idle          Updated: uart int
   //uint32_t OR : 1; // recieve buffer overrun    set: uart int clr: ser_write()
   //uint32_t NF : 1; // noise found on line       set: uart int clr: ser_write()
   //uint32_t PE : 1; // parity error              set: uart int clr: ser_write()

@@ -61,6 +61,19 @@ void setup () {
   Serial.println("ser initialized");
 }
 
+uint32_t test1 = 0;
+uint32_t test2 = 0;
 void loop () {
-  //Serial.print(ser_test());
+  test2 = ser_test();
+  Serial.print(" txlevel2: ");
+  Serial.print(test2);
+  Serial.print(" Sending at: ");
+  Serial.println(millis());
+  delay(500);
+  ser_write("hi\n", 1);
+  test1 = ser_test();
+  //ser_write("hi", 0);
+  Serial.print("txlevel1: ");
+  Serial.print(test1);
+  delay(500);
 }
