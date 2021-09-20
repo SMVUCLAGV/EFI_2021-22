@@ -57,10 +57,7 @@ void setup () {
   // test _RW_SET
   // test _RW_GET
 
-  uint32_t o = ser_init();
   Serial.println("ser initialized");
-  Serial.print("ser_init o: ");
-  Serial.println(o);
 }
 
 uint32_t test1 = 0;

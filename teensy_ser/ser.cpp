@@ -87,7 +87,6 @@ uint32_t ser_init() {
   // Problems:
   //  - digital pins have the right settings
   //  - 
-  return _RW_GET(REG_BDL, 7, 0);
 }
 
 // Write given string to uart tx in non-blocking fashion. Input string
