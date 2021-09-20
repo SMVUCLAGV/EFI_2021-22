@@ -32,7 +32,7 @@ static uint32_t ser_txfifolevel();
 static uint32_t ser_rxfifolevel();
 
 //************ Public Definitions ************ 
-void ser_init() {
+uint32_t ser_init() {
   // init local variables
   ser_f.writeinprogress = 0;
   ser_f.writeskipped = 0;
@@ -87,6 +87,7 @@ void ser_init() {
   // Problems:
   //  - digital pins have the right settings
   //  - 
+  return _RW_GET(REG_BDL, 7, 0);
 }
 
 // Write given string to uart tx in non-blocking fashion. Input string

@@ -11,7 +11,7 @@
 #define BAUDRATE 115200u
 #define SER_BUFFER_BYTE_SIZE 64
 
-void ser_init();
+uint32_t ser_init();
 
     // Writes to buffer that is to be sent
     //  returns 0 on buffer overflow. returns 1 else
