@@ -1,0 +1,84 @@
+NEW TODOS:
+
+
+
+
+
+
+
+
+
+OLD TODOS:
+
+Winter Break TODOs
+------------------------------------------------
+TODO:
+-change constants
+ -pin values
+ -ENSURE CONVERSION OF ADC's are correct!!!!
+  -for example, due to 5V to 3v3 conversion circuitry for *SOME* ADC lines,
+   the value at the ADC will be: = (1023 / 3.3) * ((5v value) * (.68027) > 3.3) ? 3.3 : (5v value) * (.68027)
+      ^^^^^ for this reason we are losing the highest ~3% of values (about 110kPa and up for MPX4115A)
+  -SET RESOLUTIONS FOR ADC's as well
+   -maybe just set them all as fine as possible so constants are easy?
+
+PERIPHERALS CHECKLIST
+ITEM	RECODED	TESTED	TODO
+MAP	y	y	adjust MAPDelta, decide on resolution of adc
+INJ	y		should be ok
+HES			setup on GP3, unknown sensor so not programmed
+TPS	y	y(sorta	1:1 map, not a map of area
+ECT	y		tune constants (lower values for Voltage divider tend to be better), adjust adc resolution?
+IAT	y		tune constants, adjust adc resolution?
+O1	y	y	code unchanged, should still work
+
+-Data.cpp
+ -change the 'values' struct to a string that is to be sent to serial print
+ -have data be sent back after every injection?
+ -information to send back:
+  -number of times a certain injection time value is used
+    -tells us where to focus tuning efforts
+  -the O-2 ratio for each data point
+  -actual ADC value for things like TPS
+ -create a method to fill sd card with data
+-micros() ROLLS OVER AT 1hr11min!!!!
+  -account for this in code?
+
+
+Things to note
+
+
+VERY IMPORTANT!!!!!!!
+ TEENSY 3.6 IS 3.3V LOGIC, NOT 5V like Arduino!!
+ ******THINGS TO ENSURE********
+ -TPS has V+ attached to 3.3v rail!!
+
+
+----ADC STUFF----
+-for all Analog to Digital Conversions
+ -a 1.2V Vref is available to check ADC accuracy if necessary
+ -speed of ADC is variable as well (can be made an interrupt even)
+ -can have the ADC take consecutive conversions and averege them if necessary
+   -change this if ADC is very volatile between conversions
+Truncated ADC's
+-MAP (A16)
+-O2  (1: A15 2: A14)
+-FPS (Fuel pressure?) (A17)
+1:1 Converted ADC's
+-TPS (A13)
+-ECT (A19) and IAT (A18)
+ -these are bit different since they are thermisters,
+  and we instead measure resistance to find temp
+
+
+Constants
+-Stoicometric ratio vs efficiency?
+-Constant Adjustments of Injection Time
+ -throttleAdjustment = 1 + TDS^2   (THIS MAY BE AN ERROR IN THE CODE, SHOULD the calculation incorporate DTPS?)
+    makes us inject more when we are speeding up, amount by which we
+    inject more seems very arbitrary (make this a lookup table)
+ -startupModifier = 1.00
+    no increase in injection time for first few cycles
+ -constModifier = 1.10
+    fudge factor
+

@@ -11,7 +11,6 @@ void comm_spi_begin(){
     SPI.beginTransaction(SPI_PARAMS);
 }
 
-
 void comm_spi_write(uint8_t sendbyte){
     SPI.transfer(sendbyte);
 }
