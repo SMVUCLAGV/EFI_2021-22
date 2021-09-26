@@ -158,6 +158,7 @@ def main(stdscr):
     output = output + 'len of TPS: ' + str(len(sensors['TPS'])) + '\n'
     output = output + 'shift-s to save and exit'
     stdscr.clear()
+    stdscr.scrollok(1)
     stdscr.addstr(output)
     stdscr.refresh()
 
