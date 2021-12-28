@@ -21,9 +21,7 @@ void anlg_in_init(){
   digitalWrite(M_PIN_ADC_nCNVST_PIN, HIGH); 
 
   // End-of-Conversion Pin, Attach Interrupt
-  attachInterrupt(digitalPinToInterrupt(M_PIN_ADC_nEOC_PIN), anlg_in_dummy, FALLING);
-  detachInterrupt(digitalPinToInterrupt(M_PIN_ADC_nEOC_PIN));
-  attachInterrupt(digitalPinToInterrupt(M_PIN_ADC_nEOC_PIN), anlg_in_eoc, FALLING);
+  pinMode(ADC_nEOC_PIN, INPUT);
 
   // Setup SPI
   pinMode(M_PIN_ADC_nCS_PIN, OUTPUT);
@@ -77,7 +75,7 @@ void anlg_in_read(uint32_t m_anlg_in_sensor, double* value, uint32_t* timestamp)
       // Read from ADC's FIFO
       int data;
       int i = 0;
-      //Read from all available sensors
+      //Read from all AVAILABLE sensors
       for (; i < M_ANLG_IN_NUM_SENSORS; i++){
         data = 0;
 
@@ -103,7 +101,8 @@ void anlg_in_read(uint32_t m_anlg_in_sensor, double* value, uint32_t* timestamp)
         Serial.println(" in for loop");
         arr[i] = (double) data;
       }
-      //Read from other channels that are not connected to a set sensor, since the ADC has 16 channels
+
+      //Read from other channels with no sensors attached as well, since the ADC has 16 channels
       for (; i < 16; i++){
         data = 0;
 
@@ -152,9 +151,12 @@ void anlg_in_read(uint32_t m_anlg_in_sensor, double* value, uint32_t* timestamp)
   
 }
 
-void anlg_in_eoc(){
+void anlg_in_handle_eoc(){
   validVals = 1;
   fetchVals = 1;
 }
 
-void anlg_in_dummy(){;}
+void anlg_in_check_eoc(){
+  if (!digitalRead(M_PIN_ADC_nEOC_PIN))
+    anlg_in_handle_eoc();
+}

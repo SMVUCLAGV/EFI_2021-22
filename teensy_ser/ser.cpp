@@ -181,4 +181,3 @@ static uint32_t ser_txfifolevel() {
 static uint32_t ser_rxfifolevel() {
   return _RW_GET(REG_RCFIFO, 7, 0);
 }
-

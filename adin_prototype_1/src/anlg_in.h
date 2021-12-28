@@ -13,6 +13,7 @@ void anlg_in_meas();
   //  The values received here will be converted to usable units (e.g. kPa)
 void anlg_in_read(uint32_t m_anlg_in_sensor, double* value, uint32_t* timestamp); 
 void anlg_in_dummy();
-void anlg_in_eoc();
+void anlg_in_handle_eoc();
+void anlg_in_check_eoc();
 
 #endif // ANLG_IN_H
