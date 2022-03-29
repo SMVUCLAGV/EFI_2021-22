@@ -80,6 +80,8 @@ def main():
   #ax2.scatter(ms, dmapPos, color='red', label='dMAP is Positive')
   #for i in range(len(mpt)):
    # ax2.axvline(x=mpt[i])
+  ax3 = plt.twinx()
+  ax3.plot(ms, rpm, color='green', label='RPM')
   plt.tight_layout()
   plt.legend(loc='upper left')
   plt.title('MAP vs Micros')
@@ -99,8 +101,11 @@ def main():
   plt.title('ECT vs Micros')
   
   plt.figure(5)
-  plt.plot(ms, list(sensors['TPS']))
-  plt.title('TPS vs Micros')
+  plt.plot(ms, list(sensors['TPS']),color='red', label='TPS')
+  ax4 = plt.twinx()
+  ax4.plot(ms,rpm,color='green',label='RPM')
+  plt.legend()
+  plt.title('TPS, RPM vs Micros')
   
   plt.figure(6)
   plt.plot(ms, afr);
