@@ -47,40 +47,40 @@ def main():
   dataFile = f'{tm[7]:03}{tm[3]:02}{tm[4]:02}{tm[5]:02}'
 
   for n in range(0, len(files)):
-  
     sensors = copy.deepcopy(sensorsMain)
   
-    if str(files[n]).find('SDLOG') == -1:
-        continue
-       
-    dataPath = "./W20/" + dataFile + str(n)
+    if str(files[n]).find('sdlog') == -1:
+      continue
 
-    allKeys = list(sensors.keys())  
-  
+    dataPath = "./W20/" + dataFile + str(n)
+    #print(dataPath)
+
+    allKeys = list(sensors.keys())
   
     with open(files[n], "rb") as fp:
-        line = fp.readline()
-        while line:
-          if(line == ""): 
-            break
-          vals = line.split(b':')
-          if len(vals) != len(allKeys):
-            print('error: mismatch in sensor number')
+      line = fp.readline()
+      while line:
+        if(line == ""): 
+          break
+        vals = line.split(b':')
+        if len(vals) != len(allKeys):
+          print('error: mismatch in sensor number')
 
-          output = ''
-          for k in range(len(allKeys)):
-            try:
-              sensors[allKeys[k]].append(float(vals[k]))
-            except ValueError:
-              sensors[allKeys[k]].append(vals[k])
+        output = ''
+        #print(len(allKeys))
+        for k in range(len(allKeys)):
+          try:
+            sensors[allKeys[k]].append(float(vals[k]))
+          except ValueError:
+            sensors[allKeys[k]].append(vals[k])
           
-          for k in sensors:
-            try:
-              output = output + k + ": " + str(float(vals[allKeys.index(k)])) + '\n'
-            except ValueError:
-              output = output + k + ": " + str(vals[allKeys.index(k)]) + '\n'
-          output = output + 'saving to: ' + dataPath + '\n'
-          line = fp.readline()
+        for k in sensors:
+          try:
+            output = output + k + ": " + str(float(vals[allKeys.index(k)])) + '\n'
+          except ValueError:
+            output = output + k + ": " + str(vals[allKeys.index(k)]) + '\n'
+
+        line = fp.readline()
       
     with open(dataPath, 'wb') as df:
         pickle.dump(sensors, df) # save file

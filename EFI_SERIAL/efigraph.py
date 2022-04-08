@@ -23,10 +23,12 @@ def main():
   # INDEXS USED
   #
   plt.figure(1)
-  plt.hist2d(sensors['RPM_INDEX'],sensors['MAP_INDEX'], [10, 11], [[0, 10], [0, 9]])
+  plt.hist2d(sensors['RPM_INDEX'],sensors['MAP_INDEX'], [10, 11], [[0, 10], [0, 11]])
   plt.colorbar()
   plt.grid()
   plt.gca().invert_yaxis()
+  plt.xlabel("RPM INDEX")
+  plt.ylabel("MAP INDEX")
   plt.title('MAP_INDEX vs RPM_INDEX')
  
   ms = list(sensors['micros'])
@@ -108,9 +110,14 @@ def main():
   plt.title('TPS, RPM vs Micros')
   
   plt.figure(6)
-  plt.plot(ms, afr);
+  plt.plot(ms, afr)
   plt.title('AFR vs Micros')
   
+  plt.figure(7)
+  plt.plot(ms, list(sensors['RPM_INDEX']), label="RPM Index")
+  plt.plot(ms, list(sensors['MAP_INDEX']), label="MAP Index")
+  plt.legend()
+  plt.title("RPM Index & MAP Index over time")
   # plt.figure(7)
   # plt.gca(projection='3d')
   # plt.scatter([int(i) for i in sensors['RPM_INDEX']],[int(i) for i in sensors['MAP_INDEX']],afr)
